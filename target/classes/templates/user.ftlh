@@ -36,7 +36,7 @@
                 <td>${us.userName}</td>
                 <td>${us.companyname}</td>
                 <td>
-                    <form action="/delete/${us.userName}" method="post">
+                    <form action="/admin/users/delete/${us.userName}" method="post">
                         <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                     </form>
 
@@ -48,7 +48,7 @@
     <div class="container1">
         <div id ="insertuser">
             <h5>Add New User</h5>
-            <form action="/insert" method="post"  id="insert_form">
+            <form action="/admin/users/insert" method="post"  id="insert_form">
                 Username:<br/>
                 <input type="text" class="form-control" name="userName" required/>
                 <br/>

@@ -4,6 +4,7 @@ package com.example.demo.Controller;
 import com.example.demo.DemoApplication;
 import com.example.demo.model.Users;
 import com.example.demo.repository.UsersRepository;
+import com.example.demo.service.MyUserDetailsService;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,7 +50,7 @@ public class UserController {
     private String login(Authentication authentication){
         logger.debug("Request: Login try by User: "+authentication.getName());
 
-        return "redirect:/user";
+        return "redirect:/shop";
     }
 
     @GetMapping("/register")
@@ -69,11 +70,11 @@ public class UserController {
                 users.setRoles("ROLE_USER");
                 usersRepository.save(users);
             logger.debug("Response: registered successfully new User:" + users.getUserName());
-            return "redirect:/user";
+            return "redirect:/login";
     }
 
 
-    @PostMapping("/insert")
+    @PostMapping("/admin/users/insert")
     private String insert(@RequestParam String userName,
                           @RequestParam String password,
                           @RequestParam String companyname,
@@ -84,24 +85,24 @@ public class UserController {
         users.setRoles("ROLE_USER");
         usersRepository.save(users);
         logger.debug("Response: insert done by User: "+authentication.getName());
-        return "redirect:/user";
+        return "redirect:/admin/users";
     }
 
 
-    @GetMapping("/user")
+    @GetMapping("/admin/users")
     private String user(Model model){
         model.addAttribute("users", usersRepository.findAll());
         return "user";
     }
 
 
-    @PostMapping("/delete/{userName}")
+    @PostMapping("/admin/users/delete/{userName}")
     private String delete(@PathVariable(value = "userName") String userName, Authentication authentication){
     logger.debug("Request: delete by User: " + authentication.getName());
     Users users = usersRepository.findByUserName(userName).orElseThrow(IllegalStateException::new);
     usersRepository.delete(users);
     logger.debug("Response: delete done by User: " + authentication.getName());
-        return "redirect:/user";
+        return "redirect:/admin/users";
     }
 
 
