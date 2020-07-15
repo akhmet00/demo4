@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products")
@@ -9,15 +10,17 @@ public class Products {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
     private String productName;
-    private Integer price;
-    private Integer quantity;
+    private String type;
+    private BigDecimal price;
 
     private String imagesrc;
 
+
     public Products() {
+
     }
 
     @Override
@@ -25,16 +28,17 @@ public class Products {
         return "Products{" +
                 "id=" + id +
                 ", productName='" + productName + '\'' +
+                ", type='" + type + '\'' +
                 ", price=" + price +
-                ", quantity=" + quantity +
+                ", imagesrc='" + imagesrc + '\'' +
                 '}';
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,22 +50,17 @@ public class Products {
         this.productName = productName;
     }
 
-    public Integer getPrice() {
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
 
     public String getImagesrc() {
         return imagesrc;
@@ -70,4 +69,19 @@ public class Products {
     public void setImagesrc(String imagesrc) {
         this.imagesrc = imagesrc;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Products products = (Products) o;
+
+        return id == products.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

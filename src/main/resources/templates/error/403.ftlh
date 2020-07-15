@@ -20,8 +20,8 @@
 <div class="container">
     <div style="padding-top: 200px" class="container1">
         <h5>You are not permitted to use this function!</h5>
-        <form action="/user" method="get"  id="insert_form">
-            <button type="submit" class="btn btn-primary">Return back</button>
+        <form action="/index" method="get"  id="insert_form">
+            <button type="submit" class="btn btn-primary">Return home</button>
         </form>
     </div>
 </div>

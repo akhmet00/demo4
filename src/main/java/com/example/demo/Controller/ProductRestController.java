@@ -6,14 +6,22 @@ import com.example.demo.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import javax.persistence.PersistenceException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
 public class ProductRestController {
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
 
     @Autowired
     private  ProductService productService;
@@ -27,74 +35,75 @@ public class ProductRestController {
     }
 
 
-    @GetMapping("/admin")
-    public String admin(Model model){
-        return "admin";
+    @RequestMapping(value = "/admin/products", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Products>> listAllProducts() {
+        List<Products> products;
+
+        try {
+            products = productRepository.findAll();
+        } catch (PersistenceException e) {
+            return new ResponseEntity<>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 
-    @GetMapping("/admin/products")
-    public String products(Model model){
-        model.addAttribute("products", productRepository.findAll());
-        return "product";
-    }
-
-    @GetMapping("/admin/products/new")
-    public String newProduct(Model model) {
-        model.addAttribute("products", new Products());
-        return "newProduct";
-    }
-
-    @PostMapping("/admin/products/new")
-    public String newProduct(@ModelAttribute("products") Products products, BindingResult bindingResult, Model model) {
-
-
+    @RequestMapping(value = "/admin/products/new", method = RequestMethod.POST)
+    public ResponseEntity newProduct(@RequestBody Products products,
+                                     BindingResult bindingResult,
+                                     Model model)
+    {
         if (bindingResult.hasErrors()) {
             logger.error(String.valueOf(bindingResult.getFieldError()));
             model.addAttribute("method", "new");
-            return "redirect:/admin/products";
+
         }
+
         productService.save(products);
         logger.debug(String.format("Product with id: %s successfully created.", products.getId()));
+        Map<Object, Object> response = new HashMap<>();
+        response.put("products", products);
+        return ResponseEntity.ok(response);
 
-        return "redirect:/admin/products";
     }
 
-    @GetMapping("/admin/products/edit/{id}")
-    public String editProduct(@PathVariable("id") Integer id, Model model){
-        Products products = productService.findById(id);
-        if (products != null){
-            model.addAttribute("products", products);
-            model.addAttribute("method", "edit");
-            return "redirect:/admin/products";
-        }else {
-            return "error/404";
+
+    @RequestMapping(value = "/admin/products/edit/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Products> editProducts(@PathVariable("id") long id,
+                                                 @RequestBody Products products)
+    {
+        try {
+            productService.edit(id,products);
+        } catch (PersistenceException e) {
+            return new ResponseEntity<>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/products/edit/{id}")
-    public String editProduct(@PathVariable("id") Integer id, @ModelAttribute("products") Products products, BindingResult bindingResult, Model model){
 
-        if (bindingResult.hasErrors()) {
-            logger.error(String.valueOf(bindingResult.getFieldError()));
-            model.addAttribute("method", "edit");
-            return "redirect:/admin/products";
-        }
-        productService.edit(id, products);
-        logger.debug(String.format("Product with id: %s has been successfully edited.", id));
+    @RequestMapping(value = "/admin/products/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Products> deleteProduct(@PathVariable("id") long id)
+    {
+        try {
+            Products products = productService.findById(id);
 
-        return "redirect:/admin/products";
-    }
-
-    @PostMapping("/admin/products/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Integer id){
-        Products products = productService.findById(id);
-        if (products != null){
+            if (products == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             productService.delete(id);
-            logger.debug(String.format("Product with id: %s successfully deleted.", products.getId()));
-            return "redirect:/admin/products";
-        }else {
-            return "error/404";
+        } catch (PersistenceException e) {
+            return new ResponseEntity<>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

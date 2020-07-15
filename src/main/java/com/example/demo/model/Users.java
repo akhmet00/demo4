@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
-import javax.validation.*;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "users")
@@ -18,8 +18,10 @@ public class Users {
     private boolean active;
     private String roles;
     private String companyname;
+    private BigDecimal money;
 
     public Users() {
+
     }
 
     public Users(@NotBlank(message = "Username cannot be empty! ") String userName,
@@ -39,6 +41,7 @@ public class Users {
                 ", active=" + active +
                 ", roles='" + roles + '\'' +
                 ", companyname='" + companyname + '\'' +
+                ", money=" + money +
                 '}';
     }
 
@@ -85,4 +88,12 @@ public class Users {
     public String getCompanyname() { return companyname; }
 
     public void setCompanyname(String companyname) { this.companyname = companyname; }
+
+    public  BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
 }
