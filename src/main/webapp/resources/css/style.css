@@ -618,6 +618,7 @@ ol {
 .hero__categories ul {
 	border: 1px solid #ebebeb;
 	padding-left: 40px;
+	padding-right: 40px;
 	padding-top: 10px;
 	padding-bottom: 12px;
 }
@@ -1668,7 +1669,7 @@ ol {
 }
 
 .product__details__pic__item img {
-	min-width: 100%;
+	min-width: 80%;
 }
 
 .product__details__pic__slider img {
@@ -2921,7 +2922,8 @@ ol {
 		padding: 10px 25px 10px 20px;
 	}
 	.hero__categories ul {
-		padding-left: 20px;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 	.latest-product__slider.owl-carousel .owl-nav {
 		right: 0;
