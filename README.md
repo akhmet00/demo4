@@ -9,8 +9,10 @@ CREATE TABLE `products` (
   `price` int DEFAULT NULL,
   `imagesrc` varchar(45) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
+  `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 ```
 # Insert products
 
