@@ -91,20 +91,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    @Override
-//    public void edit(Integer id, Users users) {
-//        Users editUser = usersRepository.findById(id);
-//        editUser.setId(id);
-//        editUser.setUserName(users.getUserName());
-//        String oldpass = bCryptPasswordEncoder.encode(users.getPassword());
-//        editUser.setPassword();
-//        editUser.setActive(users.isActive());
-//        editUser.setRoles(users.getRoles());
-//        editUser.setCompanyname(users.getCompanyname());
-//        save(users);
-//
-//    }
-
 
     @Override
     public Users findByUserName(String userName) {

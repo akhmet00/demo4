@@ -27,6 +27,8 @@ import java.util.Map;
 @RestController
 public class UserRestController {
 
+
+
     @Autowired
     private UsersRepository usersRepository;
 
@@ -59,18 +61,6 @@ public class UserRestController {
         return ResponseEntity.ok(response);
     }
 
-//    @RequestMapping(value = "/admin/users/edit/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<Users> editUsers(@PathVariable("id") Integer id,@RequestBody Users users) {
-//        try {
-//            userService.edit(id,users);
-//        } catch (PersistenceException e) {
-//            return new ResponseEntity<>(
-//                    HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//        return new ResponseEntity<>(users, HttpStatus.OK);
-//    }
-
     @RequestMapping(value = "/restlogin", method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestBody Users users)
@@ -89,6 +79,8 @@ public class UserRestController {
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
             response.put("token", token);
+
+            logger.debug(String.format("User %s received token %s",username,token));
             return ResponseEntity.ok(response);
 
             } catch (AuthenticationException e)
@@ -106,6 +98,7 @@ public class UserRestController {
         List<Users> users;
         try {
               users = usersRepository.findAll();
+              logger.debug(String.format("List all users request"));
             } catch (PersistenceException e)
         {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -132,6 +125,7 @@ public class UserRestController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             userService.delete(id);
+            logger.debug(String.format("User with id: %s deleted by admin",id));
         } catch (PersistenceException e) {
             return new ResponseEntity<>(
                     HttpStatus.INTERNAL_SERVER_ERROR);

@@ -8,7 +8,6 @@ public interface UserService {
 
     void save(Users users);
     void delete(Integer id);
-    //void edit(Integer id, Users users);
     void login(String userName, String password);
     Users findByUserName(String userName);
     Users findById(Integer id);

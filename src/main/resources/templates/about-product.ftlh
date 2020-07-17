@@ -9,13 +9,12 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Manga shop</title>
+    <title>Product</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Css Styles -->
-
     <link rel="stylesheet" href="<@spring.url 'resources/css/style.css'/>"/>
     <link rel="stylesheet" href="<@spring.url 'resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<@spring.url 'resources/css/font-awesome.min.css'/>"/>
@@ -25,6 +24,7 @@
     <link rel="stylesheet" href="<@spring.url 'resources/css/owl.carousel.min.css'/>"/>
     <link rel="stylesheet" href="<@spring.url 'resources/css/slicknav.min.css'/>"/>
 
+
     <style>
         a {
             color: #7fad39;
@@ -32,6 +32,8 @@
         a:hover {
             color: black;
         }
+
+
     </style>
 </head>
 
@@ -74,7 +76,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="/index"><img style="width: 100px" src="<@spring.url 'resources/images/logo.png'/>"></a>
+                    <a href="/index"><img style="width: 100px;" src="<@spring.url 'resources/images/logo.png'/>" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -109,6 +111,7 @@
 </header>
 <!-- Header Section End -->
 
+<!-- Hero Section Begin -->
 <section class="hero">
     <div class="container">
         <div class="row">
@@ -147,14 +150,14 @@
                             <button type="submit" class="site-btn">SEARCH</button>
                         </form>
                     </div>
-                    <div style="margin-right: 450px; margin-top: 70px" class="hero__search__phone">
-                        <div class="hero__search__phone__icon">
-                            <i class="fa fa-phone"></i>
-                        </div>
-                        <div class="hero__search__phone__text">
-                            <h5>+7777.777.77.77</h5>
-                            <span>support 24/7 time</span>
-                        </div>
+                </div>
+                <div style="margin-right: 450px; margin-top: 40px" class="hero__search__phone">
+                    <div class="hero__search__phone__icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="hero__search__phone__text">
+                        <h5>+7777.777.77.77</h5>
+                        <span>support 24/7 time</span>
                     </div>
                 </div>
             </div>
@@ -163,85 +166,35 @@
 </section>
 <!-- Hero Section End -->
 
-<!-- Featured Section Begin -->
-<section class="featured spad">
+<!-- Product Details Section Begin -->
+<section style="margin-left: 200px; margin-top: -200px" class="product-details spad">
     <div class="container">
-        <div style="margin-left: 100px; margin-top: -100px" class="row featured__filter">
-            <#list products.content as pr>
-                <div style="border-style: solid; border-width: thin; height: 430px;  margin: 15px;" class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg">
-                            <img src="${pr.imagesrc}">
-                        </div>
-                        <div class="featured__item__text">
-                            <h5><a href="#">${pr.productName}</a></h5>
-                            <h6>Category: ${pr.type}</h6>
-                            <h5>$${pr.price}</h5>
-                        </div>
-                        <form action="/cart/add/${pr.getId()}">
-                            <button style="outline: none; border: none;" class="primary-btn" type="submit">Order</button>
-                        </form>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div  class="product__details__pic">
+                    <div style="width: 250px; margin-left: 200px" class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="${product.getImagesrc()}" alt="">
                     </div>
                 </div>
-            </#list>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>${product.getProductName()}</h3>
+                    <div class="product__details__price">$${product.getPrice()}</div>
+                    <p>${product.getDescription()}</p>
+                    <a href="/cart/add/${product.getId()}" class="primary-btn">ADD TO CARD</a>
+                    <ul>
+                        <li><b>Availability</b> <span>In Stock</span></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                        <li><b>Category</b> <span>${product.getType()}</span></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <br>
-    <#if products.getTotalPages() gt 7>
-        <#assign
-        totalPages = products.getTotalPages()
-        pageNumber = products.getNumber() + 1
-
-        head = (pageNumber > 4)?then([1, -1], [1, 2, 3])
-        tail = (pageNumber < totalPages - 3)?then([-1, totalPages], [totalPages - 2, totalPages - 1, totalPages])
-        bodyBefore = (pageNumber > 4 && pageNumber < totalPages - 1)?then([pageNumber - 2, pageNumber - 1], [])
-        bodyAfter = (pageNumber > 2 && pageNumber < totalPages - 3)?then([pageNumber + 1, pageNumber + 2], [])
-
-        body = head + bodyBefore + (pageNumber > 3 && pageNumber < totalPages - 2)?then([pageNumber], []) + bodyAfter + tail
-        >
-    <#else>
-        <#assign body = 1..products.getTotalPages()>
-    </#if>
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link"  tabindex="-1">Pages</a>
-        </li>
-        <#list body as p>
-            <#if (p-1) == products.getNumber()>
-                <li class="page-item active">
-                    <a style="background-color:#7fad39; border-color: #7fad39" class="page-link">${p}</a>
-                </li>
-            <#else>
-                <li class="page-item">
-                    <a style="color:black" class="page-link" href="${url}&page=${p-1}&size=${products.getSize()}">${p}</a>
-                </li>
-            </#if>
-        </#list>
-
-    </ul>
-    <br>
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" tabindex="-1">Elements On Page</a>
-        </li>
-        <#list  [5, 10, 25, 50] as c>
-            <#if c == products.getSize()>
-                <li class="page-item active">
-                    <a style="background-color:#7fad39; border-color: #7fad39" class="page-link">${c}</a>
-                </li>
-            <#else>
-                <li class="page-item">
-                    <a style="color:black" class="page-link" href="${url}&page=${products.getNumber()}&size=${c}">${c}</a>
-                </li>
-            </#if>
-        </#list>
-
-    </ul>
-
 </section>
-
-<!-- Featured Section End -->
-
+<!-- Product Details Section End -->
 
 
 
@@ -302,7 +255,6 @@
     </div>
 </footer>
 <!-- Footer Section End -->
-
 
 
 

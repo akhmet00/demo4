@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 @Controller
@@ -47,33 +46,57 @@ public class ProductController {
 
     @GetMapping({"","/","/index"})
     private String index(Model model,
-                         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC)Pageable pageable)
+                         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC)Pageable pageable,
+                         Authentication authenticated)
     {
         model.addAttribute("totalPrice", CartService.totalPrice());
         model.addAttribute("count", CartService.counter());
         model.addAttribute("url", "/index");
         model.addAttribute("products", productRepository.findAll(pageable));
+        model.addAttribute("user", authenticated);
 
+        logger.debug(String.format("User entered to main page"));
         return "index";
+    }
+
+
+    @GetMapping("/product/{id}")
+    private String aboutProduct(@PathVariable("id") long id,
+                            Model model,
+                         Authentication authenticated)
+    {
+
+        model.addAttribute("product",productService.findById(id));
+        model.addAttribute("totalPrice", CartService.totalPrice());
+        model.addAttribute("count", CartService.counter());
+        model.addAttribute("user", authenticated);
+        model.addAttribute("url", "/product");
+
+        logger.debug(String.format("User entered to product page"));
+        return "about-product";
     }
 
 
     @GetMapping("/index/search")
     private String indexSearch(Model model,
                                @RequestParam("keyword") String keyword,
-                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC)Pageable pageable)
+                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC)Pageable pageable,
+                               Authentication authenticated)
     {
         model.addAttribute("totalPrice", CartService.totalPrice());
         model.addAttribute("count", CartService.counter());
+        model.addAttribute("user", authenticated);
 
         if(keyword==null) {
             model.addAttribute("products", productRepository.findAll(pageable));
             model.addAttribute("url", "/index/search");
+            logger.debug(String.format("User made search request"));
         }
 
         else {
             model.addAttribute("products", productRepository.findAll(keyword,pageable));
             model.addAttribute("url", "/index/search?keyword="+keyword);
+            logger.debug(String.format("User made search request"));
         }
         return "search";
     }
@@ -86,13 +109,15 @@ public class ProductController {
                                @RequestParam("min") BigDecimal min,
                                @RequestParam("max") BigDecimal max,
                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC)Pageable pageable,
-                               HttpServletRequest request)
+                               Authentication authenticated)
     {
         model.addAttribute("totalPrice", CartService.totalPrice());
         model.addAttribute("count", CartService.counter());
         model.addAttribute("url", "/index/filter?category="+category+"&min="+min+"&max="+max);
         model.addAttribute("products", productRepository.findAllByPrice(category,min,max,pageable));
+        model.addAttribute("user", authenticated);
 
+        logger.debug(String.format("User made filter request"));
         return "filter";
     }
 
@@ -107,6 +132,7 @@ public class ProductController {
         model.addAttribute("money",userService.getMoneyByUserName(authenticated.getName()));
         model.addAttribute("user", authenticated);
 
+        logger.debug(String.format("User %s entered to shopping cart",authenticated.getName()));
         return "shoping-cart";
     }
 
@@ -135,9 +161,10 @@ public class ProductController {
     }
 
     @GetMapping("/cart/clear")
-    public String clearCart()
+    public String clearCart(Authentication authenticated)
     {
         CartService.clearProducts();
+        logger.debug(String.format("User %s cleared cart",authenticated.getName()));
         return "redirect:/cart";
     }
 
@@ -145,6 +172,7 @@ public class ProductController {
     public String cartCheckout(Users users, Authentication authenticated)
     {
         CartService.cartCheckout(authenticated);
+        logger.debug(String.format("Username %s made checkout",authenticated.getName()));
         return "redirect:/cart";
     }
 

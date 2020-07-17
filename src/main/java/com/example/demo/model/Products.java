@@ -18,6 +18,8 @@ public class Products {
 
     private String imagesrc;
 
+    private String description;
+
 
     public Products() {
 
@@ -31,6 +33,7 @@ public class Products {
                 ", type='" + type + '\'' +
                 ", price=" + price +
                 ", imagesrc='" + imagesrc + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -68,6 +71,14 @@ public class Products {
 
     public void setImagesrc(String imagesrc) {
         this.imagesrc = imagesrc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

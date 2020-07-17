@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -13,17 +14,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Css Styles -->
+    <link rel="stylesheet" href="<@spring.url 'resources/css/style.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/font-awesome.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/elegant-icons.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/nice-select.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/jquery-ui.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/owl.carousel.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/slicknav.min.css'/>"/>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/elegant-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/slicknav.min.css">
-    <link rel="stylesheet" href="css/style.css">
 
     <style>
         a {
@@ -32,6 +31,8 @@
         a:hover {
             color: black;
         }
+
+
     </style>
 </head>
 
@@ -40,13 +41,41 @@
     <header class="header">
         <div class="header__top">
             <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> email@mail.com</li>
+                                <li>Free Shipping for all Orders!</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                                <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+                                <a href="https://twitter.com/explore"><i class="fa fa-twitter"></i></a>
+                                <a href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <#assign known=Session.SPRING_SECURITY_CONTEXT??>
+                                <#if known>
+                                   <a>Logged in as: ${user.getName()}</a>
+                                    <#else>
+                                    <a href="/login"><i class="fa fa-user"></i> Login</a>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="index.flth"><img src="../../../../../../Downloads/ogani/img/logo.png" alt=""></a>
+                        <a href="/index"><img style="width: 100px;" src="<@spring.url 'resources/images/logo.png'/>" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -56,21 +85,19 @@
                             <li><a href="/cart">Shopping cart</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="../../../../../../Downloads/ogani/shop-details.html">Shop Details</a></li>
+                                    <li><a href="/shop-details">Shop Details</a></li>
                                     <li><a href="/cart">Shoping Cart</a></li>
-                                    <li><a href="../../../../../../Downloads/ogani/checkout.html">Check Out</a></li>
-                                    <li><a href="../../../../../../Downloads/ogani/blog-details.html">Blog Details</a></li>
+                                    <li><a href="/contacts">Contacts</a></li>
                                 </ul>
                             </li>
-                            <li><a href="../../../../../../Downloads/ogani/blog.html">Blog</a></li>
-                            <li><a href="../../../../../../Downloads/ogani/contact.html">Contact</a></li>
+                            <li><a href="/contacts">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="/cart"><i class="fa fa-shopping-bag"></i> <span>${count}</span></a></li>
+                            <li><a href="/cart"><i class="fa fa-shopping-cart"></i> <span>${count}</span></a></li>
                         </ul>
                         <div class="header__cart__price"><h6>Total price: <span>$${totalPrice}</span></div>
                     </div>
@@ -91,37 +118,45 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All categories</span>
+                            <span>Filters</span>
                         </div>
-                        <ul>
-                            <form action="/index/search" method="get"><li><input type="hidden" name="keyword" value="manga"><button style="background-color: Transparent; outline: none; border: none; " type="submit">Manga</button></li></form>
-                            <form action="/index/search" method="get"><li><input type="hidden" name="keyword"  value="manhua"><button style="background-color: Transparent; outline: none; border: none; " type="submit">Korean manga(manhua)</button></li></form>
-                            <form action="/index/search" method="get"><li><input type="hidden" name="keyword"  value="manga"><button style="background-color: Transparent; outline: none; border: none; " type="submit">some shit</button></li></form>
+                        <ul style="padding-right: 40px">
+                            <form action="/index/filter" method="get">
+                                <a>Choose category:</a><br>
+                               <li><select class="form-control form-control-sm" name = "category" required >
+                                    <option value = "">Select</option>
+                                    <option value = "Manga">Manga</option>
+                                    <option value = "Manhua">Manhua</option>
+                                </select></li>
+                                <br>
+                                <a>Min price:</a>
+                                <li><input class="form-control form-control-sm" type="text" name="min" placeholder="Min. price" value="10" required></li>
+                                <a>Max price:</a>
+                                <li><input class="form-control form-control-sm" type="text" name="max" placeholder="Max. price" value="100000" required></li><br>
+                                <button style="color: #7fad39; outline: none; border: none"  type="submit">Apply filter</button>
+                            </form>
                         </ul>
                     </div>
                 </div>
-                <form action="/index/filter" method="get">
-                    <a>Choose category:</a><br>
-                    <select name = "category" required >
-                        <option value = "">Select</option>
-                        <option value = "Manga">Manga</option>
-                        <option value = "Manhua">Manhua</option>
-                    </select>
-                    <input type="text" name="min" placeholder="Min. price" value="10" required>
-                    <input type="text" name="max" placeholder="Max. price" value="100000" required>
-                    <button style="color: #7fad39; outline: none; border: none"  type="submit">Apply filter</button>
-                </form>
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
                             <form action="/index/search" method="get">
                                 <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
+                                    Search
                                 </div>
                                 <input type="text" name="keyword" placeholder="What do you need?">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
+                        </div>
+                    </div>
+                    <div style="margin-right: 450px; margin-top: 40px" class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+7777.777.77.77</h5>
+                            <span>support 24/7 time</span>
                         </div>
                     </div>
                 </div>
@@ -133,15 +168,15 @@
     <!-- Featured Section Begin -->
     <section class="featured spad">
         <div class="container">
-            <div class="row featured__filter">
+            <div style="margin-left: 100px; margin-top: -100px" class="row featured__filter">
                 <#list products.content as pr>
-                <div style="border-style: solid; border-width: thin;  margin: 10px" class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div style="border-style: solid; border-width: thin; height: 430px;  margin: 15px;" class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg">
                             <img src="${pr.imagesrc}">
                         </div>
                         <div class="featured__item__text">
-                            <h5><a href="#">${pr.productName}</a></h5>
+                            <h5><a href="/product/${pr.getId()}">${pr.productName}</a></h5>
                             <h6>Category: ${pr.type}</h6>
                             <h5>$${pr.price}</h5>
                         </div>
@@ -219,10 +254,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="index.flth"><img src="../../../../../../Downloads/ogani/img/logo.png" alt=""></a>
+                            <a href="/index"><img style="width: 200px" src="<@spring.url 'resources/images/logo.png'/>"></a>
                         </div>
                         <ul>
-                            <li>Address: her vam a ne address</li>
+                            <li>Address: <a href="/contacts">Kazakhstan, Almaty</a></li>
                             <li>Phone: +7777.777.77.77</li>
                             <li>Email: email@mail.com</li>
                         </ul>
@@ -232,20 +267,10 @@
                     <div class="footer__widget">
                         <h6>Useful Links</h6>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="/shop-details">About Us</a></li>
+                            <li><a href="/contacts">Contacts</a></li>
+                            <li><a href="https://www.dhl.com/kz-ru/home.html">Delivery information</a></li>
+                            <li><a href="https://www.instagram.com/?hl=ru">Instagram</a></li>
                         </ul>
                     </div>
                 </div>
@@ -258,10 +283,10 @@
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
                         <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+                            <a href="https://twitter.com/explore"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>
                 </div>
@@ -272,23 +297,12 @@
                         <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
   Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="../../../../../../Downloads/ogani/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
     <!-- Footer Section End -->
-
-    <!-- Js Plugins -->
-    <script src="../../../../../../Downloads/ogani/js/jquery-3.3.1.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/bootstrap.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/jquery.nice-select.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/jquery-ui.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/jquery.slicknav.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/mixitup.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/owl.carousel.min.js"></script>
-    <script src="../../../../../../Downloads/ogani/js/main.js"></script>
 
 
 

@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html>
 
@@ -14,46 +15,78 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="<@spring.url 'resources/css/style.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/font-awesome.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/elegant-icons.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/nice-select.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/jquery-ui.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/owl.carousel.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/slicknav.min.css'/>"/>
 </head>
 
 <body>
     <!-- Header Section Begin -->
     <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> email@mail.com</li>
+                                <li>Free Shipping for all Orders!</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                                <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+                                <a href="https://twitter.com/explore"><i class="fa fa-twitter"></i></a>
+                                <a href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <#assign known=Session.SPRING_SECURITY_CONTEXT??>
+                                <#if known>
+                                    <a>Logged in as: ${user.getName()}</a>
+                                <#else>
+                                    <a href="/login"><i class="fa fa-user"></i> Login</a>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
                             <li><a href="/index">Home</a></li>
-                            <li class="active"><a href="./shop-grid.html">Shopping cart</a></li>
+                            <li class="active"><a href="/cart">Shopping cart</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="/cart">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="/shop-details">Shop Details</a></li>
+                                    <li class="active"><a href="/cart">Shoping Cart</a></li>
+                                    <li><a href="/contacts">Contacts</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="/contacts">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="/cart"><i class="fa fa-shopping-bag"></i> <span>${count}</span></a></li>
+                            <li><a href="/cart"><i class="fa fa-shopping-cart"></i> <span>${count}</span></a></li>
                         </ul>
                         <div class="header__cart__price"><h6>Total price: <span>$${totalPrice}</span></div><br>
-                        <div class="header__cart__price"><h6>Authorized as: <span>${user.getName()}</span></div><br>
+                        <ul>
+                            <li style="margin-right: -20px"><a><i class="fa fa-money"></i></a></li>
+                        </ul>
                         <div class="header__cart__price"><h6>You have: <span>$${money.getMoney()}</span></div><br>
                     </div>
                 </div>
@@ -71,6 +104,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__table">
+                        <#if products?has_content>
                         <table>
                             <thead>
                                 <tr>
@@ -118,17 +152,21 @@
                             </#list>
                             </tbody>
                         </table>
+                            <div class="col-lg-12">
+                                <div class="shoping__cart__btns">
+                                    <form action="/cart/clear" method="get"><button style="margin: 10px"  type="submit" class="btn btn-info">
+                                            Clear Cart</button></form>
+                                </div>
+                            </div>
+                            <#else>
+                            <h1>Cart is empty</h1><br>
+                        </#if>
+                        <a href="/index" class="primary-btn cart-btn">CONTINUE SHOPPING</a><br>
+
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a href="/index" class="primary-btn cart-btn">CONTINUE SHOPPING</a><br>
-                        <form action="/cart/clear" method="get"><button style="margin: 10px"  type="submit" class="btn btn-info">
-                            Clear Cart</button></form>
-                    </div>
-                </div>
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount">
@@ -165,10 +203,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="/index"><img style="width: 200px" src="<@spring.url 'resources/images/logo.png'/>"></a>
                         </div>
                         <ul>
-                            <li>Address: her vam a ne address</li>
+                            <li>Address: <a href="/contacts">Kazakhstan, Almaty</a></li>
                             <li>Phone: +7777.777.77.77</li>
                             <li>Email: email@mail.com</li>
                         </ul>
@@ -178,20 +216,10 @@
                     <div class="footer__widget">
                         <h6>Useful Links</h6>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="/shop-details">About Us</a></li>
+                            <li><a href="/contacts">Contacts</a></li>
+                            <li><a href="https://www.dhl.com/kz-ru/home.html">Delivery information</a></li>
+                            <li><a href="https://www.instagram.com/?hl=ru">Instagram</a></li>
                         </ul>
                     </div>
                 </div>
@@ -204,10 +232,10 @@
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
                         <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+                            <a href="https://twitter.com/explore"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>
                 </div>
@@ -216,9 +244,8 @@
                 <div class="col-lg-12">
                     <div class="footer__copyright">
                         <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
                     </div>
                 </div>
             </div>
@@ -226,15 +253,6 @@
     </footer>
     <!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
 
 
 </body>
