@@ -1,6 +1,20 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <base href="/">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="<@spring.url 'resources/css/style.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/font-awesome.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/elegant-icons.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/nice-select.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/jquery-ui.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/owl.carousel.min.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url 'resources/css/slicknav.min.css'/>"/>
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -108,9 +122,8 @@
             <h1>Register Page</h1>
             <p>Fill all blanks</p>
             <hr>
-
             <label><b>Username</b></label><br>
-            <input type="text" placeholder="Username is your login" name="userName"><br>
+            <input type="text" placeholder="Username is your login" name="userName">  ${message?if_exists} <br>
 
             <label><b>Password</b></label><br>
             <input type="password" placeholder="Password"  name="password" required><br>
