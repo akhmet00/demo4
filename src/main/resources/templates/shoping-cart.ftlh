@@ -51,6 +51,7 @@
                                 <#assign known=Session.SPRING_SECURITY_CONTEXT??>
                                 <#if known>
                                     <a>Logged in as: ${user.getName()}</a>
+                                    <a href="/logout"><i class="fa fa-sign-out">Logout</i></a>
                                 <#else>
                                     <a href="/login"><i class="fa fa-user"></i> Login</a>
                                 </#if>
@@ -77,18 +78,6 @@
                             <li><a href="/contacts">Contacts</a></li>
                         </ul>
                     </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="/cart"><i class="fa fa-shopping-cart"></i> <span>${count}</span></a></li>
-                        </ul>
-                        <div class="header__cart__price"><h6>Total price: <span>$${totalPrice}</span></div><br>
-                        <ul>
-                            <li style="margin-right: -20px"><a><i class="fa fa-money"></i></a></li>
-                        </ul>
-                        <div class="header__cart__price"><h6>You have: <span>$${money.getMoney()}</span></div><br>
-                    </div>
                 </div>
             </div>
             <div class="humberger__open">
@@ -168,27 +157,20 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-
-                            <li>Total <span>$${totalPrice}</span></li>
-
+                            <li>You have <span>$${money.getMoney()}</span></li>
+                            <li>Total Price <span>$${totalPrice}</span></li>
+                            <li>After checkout <span>$${money.getMoney()-totalPrice}</span></li>
                         </ul>
+                        <#if money.getMoney() gt totalPrice>
                         <form action="/cart/checkout" method="get">
                         <button style="outline: none; border:none" class="primary-btn">PROCEED TO CHECKOUT</button>
                         </form>
+                            <#else>
+                                <button style="outline: none; border:none; background-color: gray;" class="primary-btn" disabled>You dont have enough money!</button>
+                        </#if>
                     </div>
                 </div>
             </div>

@@ -51,6 +51,7 @@
                             <#assign known=Session.SPRING_SECURITY_CONTEXT??>
                             <#if known>
                                 <a>Logged in as: ${user.getName()}</a>
+                                <a href="/logout"><i class="fa fa-sign-out">Logout</i></a>
                             <#else>
                                 <a href="/login"><i class="fa fa-user"></i> Login</a>
                             </#if>

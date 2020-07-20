@@ -126,8 +126,8 @@ public class ProductController {
     public String cart(Model model, Users users,
                        Authentication authenticated)
     {
+        model.addAttribute("totalPrice",CartService.totalPrice());
         model.addAttribute("products",CartService.productsInCart());
-        model.addAttribute("totalPrice", CartService.totalPrice());
         model.addAttribute("count", CartService.counter());
         model.addAttribute("money",userService.getMoneyByUserName(authenticated.getName()));
         model.addAttribute("user", authenticated);
@@ -135,6 +135,7 @@ public class ProductController {
         logger.debug(String.format("User %s entered to shopping cart",authenticated.getName()));
         return "shoping-cart";
     }
+
 
     @GetMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") long id)

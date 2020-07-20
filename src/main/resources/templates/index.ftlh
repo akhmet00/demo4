@@ -58,12 +58,16 @@
                                 <a href="https://twitter.com/explore"><i class="fa fa-twitter"></i></a>
                                 <a href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
                             </div>
-                            <div class="header__top__right__auth">
+                            <div class="header__top__right__auth" >
                                 <#assign known=Session.SPRING_SECURITY_CONTEXT??>
                                 <#if known>
                                    <a>Logged in as: ${user.getName()}</a>
+                                    <a href="/logout"><i class="fa fa-sign-out">Logout</i></a>
                                     <#else>
                                     <a href="/login"><i class="fa fa-user"></i> Login</a>
+                                        <#if RequestParameters.logout??>
+                                            <a>Logged out successfully</a>
+                                        </#if>
                                 </#if>
                             </div>
                         </div>

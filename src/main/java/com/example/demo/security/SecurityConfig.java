@@ -52,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .formLogin().loginPage("/login").permitAll()
             .and()
+                .logout().logoutSuccessUrl("/index?logout")
+            .and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
             .and()
                 .csrf().disable();

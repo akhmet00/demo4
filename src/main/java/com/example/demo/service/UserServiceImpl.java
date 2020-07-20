@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
             System.out.println(token);
             System.out.println(bearer);
         }else{
-            logger.error(String.format("Error with %s authentication!", userName));
+            logger.debug(String.format("Error with %s authentication!", userName));
         }
     }
 
