@@ -1239,3 +1239,47 @@ FTL stack trace ("~" means nesting-related):
 2020-07-20 14:30:33.123 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
 2020-07-20 14:30:35.220 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.Controller.ProductController    : User entered to main page
 2020-07-20 14:30:39.012 DEBUG 2852 --- [http-nio-8080-exec-2] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:31:35.180 DEBUG 2852 --- [http-nio-8080-exec-10] c.e.demo.Controller.UserController       : Login page request
+2020-07-20 14:31:38.017 DEBUG 2852 --- [http-nio-8080-exec-8] c.e.demo.Controller.UserController       : Register page request
+2020-07-20 14:31:38.993 DEBUG 2852 --- [http-nio-8080-exec-9] c.e.demo.Controller.UserController       : Login page request
+2020-07-20 14:31:39.731 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.UserController       : Register page request
+2020-07-20 14:31:40.255 DEBUG 2852 --- [http-nio-8080-exec-2] c.e.demo.Controller.UserController       : Login page request
+2020-07-20 14:31:42.900 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.service.UserDetailsServiceImpl  : User with role: [ROLE_ADMIN] , name: kek and password: $2a$12$uavs/zM.p87UmXsVV.eNR.1hvD6XHImUB98OStJYksrjTVzs/IhyG created.
+2020-07-20 14:31:42.905 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.service.UserDetailsServiceImpl  : User with role: [ROLE_ADMIN] , name: kek and password: $2a$12$uavs/zM.p87UmXsVV.eNR.1hvD6XHImUB98OStJYksrjTVzs/IhyG created.
+2020-07-20 14:31:43.920 DEBUG 2852 --- [http-nio-8080-exec-4] c.example.demo.service.UserServiceImpl   : User kek logged in successfully!
+2020-07-20 14:31:43.921 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.Controller.UserController       : Login try by User: kek
+2020-07-20 14:31:43.943 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:09.236 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:32:11.220 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:13.569 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:14.872 DEBUG 2852 --- [http-nio-8080-exec-6] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:32:16.725 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:18.613 DEBUG 2852 --- [http-nio-8080-exec-6] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:32:20.111 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:39.050 DEBUG 2852 --- [http-nio-8080-exec-10] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:41.364 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:46.549 DEBUG 2852 --- [http-nio-8080-exec-8] c.e.demo.Controller.ProductController    : User entered to product page
+2020-07-20 14:32:50.350 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:32:54.507 DEBUG 2852 --- [http-nio-8080-exec-3] c.e.demo.Controller.UserController       : Login page request
+2020-07-20 14:32:57.382 DEBUG 2852 --- [http-nio-8080-exec-2] c.e.demo.Controller.UserController       : Register page request
+2020-07-20 14:33:02.698 DEBUG 2852 --- [http-nio-8080-exec-7] c.e.demo.Controller.UserController       : Login page request
+2020-07-20 14:33:04.646 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.service.UserDetailsServiceImpl  : User with role: [ROLE_ADMIN] , name: kek and password: $2a$12$uavs/zM.p87UmXsVV.eNR.1hvD6XHImUB98OStJYksrjTVzs/IhyG created.
+2020-07-20 14:33:04.650 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.service.UserDetailsServiceImpl  : User with role: [ROLE_ADMIN] , name: kek and password: $2a$12$uavs/zM.p87UmXsVV.eNR.1hvD6XHImUB98OStJYksrjTVzs/IhyG created.
+2020-07-20 14:33:05.443 DEBUG 2852 --- [http-nio-8080-exec-5] c.example.demo.service.UserServiceImpl   : User kek logged in successfully!
+2020-07-20 14:33:05.444 DEBUG 2852 --- [http-nio-8080-exec-5] c.e.demo.Controller.UserController       : Login try by User: kek
+2020-07-20 14:33:05.462 DEBUG 2852 --- [http-nio-8080-exec-6] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:10.843 DEBUG 2852 --- [http-nio-8080-exec-2] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:33:18.666 DEBUG 2852 --- [http-nio-8080-exec-6] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:21.990 DEBUG 2852 --- [http-nio-8080-exec-2] c.e.demo.Controller.ProductController    : Product with id: 10 added to shopping cart.
+2020-07-20 14:33:22.017 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:23.545 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:33:27.872 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:29.760 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : Product with id: 10 added to shopping cart.
+2020-07-20 14:33:29.790 DEBUG 2852 --- [http-nio-8080-exec-9] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:31.693 DEBUG 2852 --- [http-nio-8080-exec-6] c.e.demo.Controller.ProductController    : Product with id: 10 added to shopping cart.
+2020-07-20 14:33:31.720 DEBUG 2852 --- [http-nio-8080-exec-8] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:33.314 DEBUG 2852 --- [http-nio-8080-exec-4] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:33:44.615 DEBUG 2852 --- [http-nio-8080-exec-8] c.e.demo.Controller.ProductController    : User kek cleared cart
+2020-07-20 14:33:44.636 DEBUG 2852 --- [http-nio-8080-exec-1] c.e.demo.Controller.ProductController    : User kek entered to shopping cart
+2020-07-20 14:33:46.113 DEBUG 2852 --- [http-nio-8080-exec-3] c.e.demo.Controller.ProductController    : User entered to main page
+2020-07-20 14:33:55.240 DEBUG 2852 --- [http-nio-8080-exec-10] c.e.demo.Controller.ProductController    : User entered to main page

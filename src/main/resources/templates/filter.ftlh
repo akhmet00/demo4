@@ -176,7 +176,7 @@
                             <img src="${pr.imagesrc}">
                         </div>
                         <div class="featured__item__text">
-                            <h5><a href="#">${pr.productName}</a></h5>
+                            <h5><a href="/product/${pr.getId()}">${pr.productName}</a></h5>
                             <h6>Category: ${pr.type}</h6>
                             <h5>$${pr.price}</h5>
                         </div>
