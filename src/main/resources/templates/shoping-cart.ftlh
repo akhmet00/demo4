@@ -164,6 +164,7 @@
                             <li>Total Price <span>$${totalPrice}</span></li>
                             <li>After checkout <span>$${money.getMoney()-totalPrice}</span></li>
                         </ul>
+                        <#if products?has_content>
                         <#if money.getMoney() gt totalPrice>
                         <form action="/cart/checkout" method="get">
                         <button style="outline: none; border:none" class="primary-btn">PROCEED TO CHECKOUT</button>
@@ -171,6 +172,10 @@
                             <#else>
                                 <button style="outline: none; border:none; background-color: gray;" class="primary-btn" disabled>You dont have enough money!</button>
                         </#if>
+                            <#else>
+                                <button style="outline: none; border:none; background-color: gray;" class="primary-btn" disabled>Cart is empty!</button>
+                        </#if>
+
                     </div>
                 </div>
             </div>
